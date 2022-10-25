@@ -2,21 +2,30 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
+  // const [todos, setTodos] = useState([
+  //   { name: "Buy shopping", priority: true },
+  //   { name: "Clean bathroom", priority: true },
+  //   { name: "Car's MOT", priority: false },
+  // ]);
   const [todos, setTodos] = useState([
-    { name: "Buy shopping", priority: true },
-    { name: "Clean bathroom", priority: true },
-    { name: "Car's MOT", priority: false },
+    { name: "Buy shopping", priority: "high" },
+    { name: "Clean bathroom", priority: "low" },
+    { name: "Car's MOT", priority: "high" },
   ]);
 
   const [newTodo, setNewTodo] = useState("");
 
-  const [isChecked, setChecked] = useState(true);
+  // const [isChecked, setChecked] = useState(true); using ttrue/flase values
+  const [isChecked, setChecked] = useState("");
 
   const todoNodes = todos.map((todo, index) => {
     return (
-      <li key={index} className={todo.priority ? "purchased" : "not-purchased"}>
+      <li
+        key={index}
+        className={todo.priority === "high" ? "purchased" : "not-purchased"}
+      >
         <span>{todo.name}</span>
-        {todo.priority ? <span>high</span> : <span>low</span>}
+        {todo.priority === "high" ? <span>high</span> : <span>low</span>}
         {/* Trying to make a delete button */}
         <button onClick={() => deleteTodo(index)}>
           <span>X</span>
@@ -60,12 +69,14 @@ function App() {
           value={newTodo}
           onChange={handleTodoInput}
         ></input>
+
         <label htmlFor="high">High</label>
         <input
           type="radio"
           id="high"
           name="priority"
-          value={isChecked}
+          value="high"
+          // value="{isChecked}"
           onChange={handleChecked}
         ></input>
         <label htmlFor="low">Low</label>
@@ -73,7 +84,8 @@ function App() {
           type="radio"
           id="low"
           name="priority"
-          value={!isChecked}
+          value="low"
+          // value={!isChecked}
           onChange={handleChecked}
         ></input>
         <input type="submit" value="Save Item"></input>
